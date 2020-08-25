@@ -8,8 +8,8 @@ class thread_guard
 {
 	std::thread & t;
 public:
-	explicit thread_guard(std::threads & t_);
-	t(t_)
+	explicit thread_guard(std::threads & t_):
+		t(t_)
 	{}
 
 	/*
