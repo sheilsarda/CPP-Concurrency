@@ -1,3 +1,6 @@
+/**
+ * Similar to std::thread, except it automatically joins in the destructor
+ */
 class joining_thread
 {
     std::thread t;
