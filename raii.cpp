@@ -8,7 +8,7 @@ class thread_guard
 {
 	std::thread & t;
 public:
-	explicit thread_guard(std::threads & t_):
+	explicit thread_guard(std::thread& t_):
 		t(t_)
 	{}
 
@@ -32,19 +32,19 @@ public:
 	 * object will generate compilation error.
 	 */
 	thread_guard(thread_guard const&)=delete;
-	thread_guard & operator= (thread_guard const&)=delete;
+	thread_guard& operator= (thread_guard const&)=delete;
 };
 
-void do_something(int * temp)
+void do_something(int temp)
 {
-	*temp += 2;
-	return;
+    std::cout<<"doing something\n";
+    return;
 }
 
 struct func
 {
 	int & i;
-	func(int & i_):i{i_}{}
+	func(int& i_):i{i_}{}
 	
 	/*
 	 * The first part operator() is the way to declare the function 
@@ -74,11 +74,10 @@ void do_something_in_current_thread()
  * thread_guard g destroyed first, and the thread is joined in
  * the destructor.
  */
-
 int main()
 {
-	int some local_state = 0;
-	func my_func(some_local_state);
+	int some_local_state = 0;
+    func my_func(some_local_state);
 	std::thread t(my_func);
 	thread_guard g(t);
 	do_something_in_current_thread();
